@@ -39,6 +39,6 @@ const { Builder, By, Key, until } = require('selenium-webdriver');
 	await driver.quit();
 
 
-	// .//table/tbody/tr/td[position() = count(parent::table /thead/td[contains('Name'))]
+	// .//table/tbody/tr[position() = count(//td/a[.='SimpleDataset']/parent::*/preceding-sibling::*)+1]/td[position() = count(//th[@data-title="Rows"]/preceding-sibling::*)+1]
 })();
 
