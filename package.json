@@ -1,0 +1,27 @@
+{
+  "name": "automation_bahdanouski_5-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "chromedriver": "^77.0.0",
+    "geckodriver": "^1.19.0",
+    "selenium-webdriver": "^4.0.0-alpha.5"
+  },
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  },
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Squarix/automation_bahdanouski_5-1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Squarix/automation_bahdanouski_5-1/issues"
+  },
+  "homepage": "https://github.com/Squarix/automation_bahdanouski_5-1#readme"
+}
