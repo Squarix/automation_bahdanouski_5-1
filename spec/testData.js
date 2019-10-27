@@ -1,4 +1,6 @@
 module.exports = {
 	searchResults: 50000,
-	browser: 'chrome'
+	browser: 'chrome',
+	query: 'iTechArt',
+	url: 'https://google.com',
 }
