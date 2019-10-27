@@ -1,5 +1,5 @@
-const { Builder, By, Key, until, WebElement } = require('selenium-webdriver');
-const { browser, searchResults } = require('./testData');
+const {Builder, By, Key, until, WebElement, WebDriverWait, ExpectedConditions} = require('selenium-webdriver');
+const {browser, searchResults} = require('./testData');
 const config = require('./config');
 
 jasmine.DEFAULT_TIMEOUT_INTERVAL = config.timeout;
@@ -28,37 +28,54 @@ async function checkElements(elements, search) {
 }
 
 describe('Google ', () => {
-	beforeAll(() => {
+	beforeEach(async () => {
 		this.driver = new Builder()
 			.forBrowser(browser)
 			.build();
 
 		this.iTechArt = 'iTechArt'.toUpperCase();
-	})
+		await doSearch();
+	});
+
+	it ('Check results amount', async () => {
+		const resultsCount = this.driver.findElement(By.id('resultStats'));
+		const myRegexp = /примерно ([\s\S]*?) \(/;
+		const match = myRegexp.exec(await resultsCount.getText())[1];
+		const total = Number.parseInt(match.replace(' ', ''));
+		expect(total > searchResults).toBe(true);
+	});
 
 	it('Should check all results on first page', async () => {
-		await this.driver.get('https://www.google.com/search?q=iTechArt');
-		//const element = this.driver.findElement(By.name('q'));
-		//element.sendKeys('ITechArt');
-		//element.submit();
-
-		//await this.driver.wait(until.elementLocated(By.id('search')), 15000, 'Looking for element');
-
 		const firstPage = await this.driver.findElements(By.className('rc'));
 		await checkElements(firstPage, this.iTechArt);
-
-		//const secondPage = this.driver.findElement(By.xpath('.//a[contains(@aria-label, \'Page 2\')]'));
 	});
 
 	it('Should check all result on second page', async () => {
-		await this.driver.get('https://www.google.com/search?q=iTechArt&start=10');
+		const secondPageButton = this.driver.findElement(By.xpath('.//a[contains(@aria-label, \'Page 2\')]'));
+		await secondPageButton.click();
+
 		const secondPage = await this.driver.findElements(By.className('rc'));
 		await checkElements(secondPage, this.iTechArt);
 	});
 
-	afterAll(async () => {
+	afterEach(async () => {
 		await this.driver.quit();
-	})
+	});
 
+	function timeout(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	const doSearch = async () => {
+		await this.driver.get('https://www.google.com');
+		const element = this.driver.findElement(By.name('q'));
+		await element.sendKeys('ITechArt');
+
+		const submit = this.driver.findElement(By.xpath('.//form//input[contains(@aria-label, \'Поиск в Google\')]'));
+
+		// waiting for autocomplete
+		await timeout(1000);
+		await submit.click();
+	}
 
 });
