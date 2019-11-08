@@ -14,9 +14,6 @@ module.exports = class SearchPage {
 		this._resultsLocator = By.className('rc');
 		this._searchQuery = '';
 
-		this._urlLocator = By.tagName('cite');
-		this._headerLocator = By.tagName('h3');
-		this._descriptionLocator = By.className('st');
 		this._resultsStatLocator = By.id('resultStats');
 	}
 
@@ -24,17 +21,6 @@ module.exports = class SearchPage {
 		return this._resultsStatLocator;
 	}
 
-	get urlLocator() {
-		return this._urlLocator;
-	}
-
-	get headerLocator() {
-		return this._headerLocator;
-	}
-
-	get descriptionLocator() {
-		return this._descriptionLocator;
-	}
 
 	get url() {
 		return this._url;
@@ -110,19 +96,8 @@ module.exports = class SearchPage {
 		await submit.click();
 	}
 
-	async getText(element, search) {
-		const url = await element.findElement(this.urlLocator).getText();
-		const header = await element.findElement(this.headerLocator).getText();
-		const description = await element.findElement(this.descriptionLocator).getText();
-
-		const urlContains = this.findText(search, url);
-		const descContains = this.findText(search, description);
-		const headerContains = this.findText(search, header);
-
-		return urlContains || descContains || headerContains
-	}
-
-	findText(search, entry) {
-		return entry.toUpperCase().indexOf(search) !== -1
+	async getText(element) {
+		const text = await element.getText();
+		return text.toUpperCase();
 	}
 };

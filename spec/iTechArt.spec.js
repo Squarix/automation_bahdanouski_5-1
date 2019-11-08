@@ -7,7 +7,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = config.timeout;
 
 const checkElements = async (elements, search) => {
 	await Promise.all(elements.map(async element => {
-		expect(await this.searchPage.getText(element, search)).toBe(true);
+		expect(await this.searchPage.getText(element)).toContain(search);
 	}));
 };
 
