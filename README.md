@@ -8,3 +8,5 @@
 
 #####Config located at
 >spec/config.js
+
+#HAVE TROUBLES WITH MESSAGE BODY AND PARSING DATE

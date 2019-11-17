@@ -6,7 +6,9 @@
   "dependencies": {
     "chromedriver": "^77.0.0",
     "geckodriver": "^1.19.0",
+    "googleapis": "^39.2.0",
     "jasmine-allure-reporter": "^1.0.2",
+    "js-base64": "^2.5.1",
     "log4js": "^6.0.0",
     "selenium-webdriver": "^4.0.0-alpha.5"
   },
