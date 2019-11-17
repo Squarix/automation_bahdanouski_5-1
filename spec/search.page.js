@@ -1,4 +1,4 @@
-const {By} = require('selenium-webdriver');
+const {By, until} = require('selenium-webdriver');
 const {timeout} = require('./helpers/util');
 const logger = require('./helpers/logger');
 
@@ -36,7 +36,7 @@ module.exports = class SearchPage {
 	async doSearch() {
 		await this.driver.get(this.url);
 		logger.debug('Got search page');
-		const element = this.driver.findElement(this.inputLocator);
+		const element = await this.driver.wait(until.elementLocated(this.inputLocator));
 		await element.sendKeys(this.searchQuery);
 		logger.debug('Send query');
 		const submit = this.driver.findElement(this.searchButtonLocator);
