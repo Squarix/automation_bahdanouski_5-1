@@ -17,14 +17,12 @@ describe('gmail api', () => {
 
 	it('Receive messages', async () => {
 		logger.debug(`Receiving messages data`);
-		console.log(this.client)
 		await gmailApi.processMessages(this.client);
 		logger.debug(`End receiving`);
 	});
 
 	it('Check messages amount', async () => {
 		logger.debug(`it check messages amount`);
-		console.log(this.client)
 		const messagesAmount = await gmailApi.countMessages(this.client);
 		expect(messagesAmount).toBe(config.messages);
 		logger.debug(`end check messages amount`);

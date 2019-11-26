@@ -5,6 +5,7 @@ const {google} = require('googleapis');
 const base64 = require('js-base64').Base64;
 const logger = require('./../helpers/logger');
 const readline = require('readline');
+const config = require('../config');
 
 const SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
 const CREDENTIALS_PATH = 'credentials3.json';
@@ -57,7 +58,7 @@ async function processMessage(id, auth) {
 	let messageSubject = getSubject(messageData);
 	logger.debug(messageSubject);
 
-	if (messageSubject.includes('Automation')) {
+	if (messageSubject.includes(config.subject)) {
 		logger.debug('Subject appropriate');
 		countMessages++;
 		logger.info(`Subject: ${messageSubject}. \nBody:\n${getBody(messageData)}`);
@@ -67,29 +68,28 @@ async function processMessage(id, auth) {
 	logger.debug('End process message');
 }
 
-async function getNewToken(oAuth2Client) {
-	return new Promise(resolve => {
-		const authUrl = oAuth2Client.generateAuthUrl({
-			access_type: 'offline',
-			scope: SCOPES,
-		});
-		console.log('Authorize this app by visiting this url:', authUrl);
-		const rl = readline.createInterface({
-			input: process.stdin,
-			output: process.stdout,
-		});
-		rl.question('Enter the code from that page here: ', (code) => {
-			rl.close();
-			oAuth2Client.getToken(code, async (err, token) => {
-				if (err) return console.error('Error retrieving access token', err);
-				oAuth2Client.setCredentials(token);
-				// Store the token to disk for later program executions
-				await fs.writeFile(TOKEN_PATH, JSON.stringify(token));
-				resolve(oAuth2Client)
-			});
-		});
-	})
-}
+// async function getNewToken(oAuth2Client) {
+// 	return new Promise(resolve => {
+// 		const authUrl = oAuth2Client.generateAuthUrl({
+// 			access_type: 'offline',
+// 			scope: SCOPES,
+// 		});
+// 		const rl = readline.createInterface({
+// 			input: process.stdin,
+// 			output: process.stdout,
+// 		});
+// 		rl.question('Enter the code from that page here: ', (code) => {
+// 			rl.close();
+// 			oAuth2Client.getToken(code, async (err, token) => {
+// 				if (err) return console.error('Error retrieving access token', err);
+// 				oAuth2Client.setCredentials(token);
+// 				// Store the token to disk for later program executions
+// 				await fs.writeFile(TOKEN_PATH, JSON.stringify(token));
+// 				resolve(oAuth2Client)
+// 			});
+// 		});
+// 	})
+// }
 
 function getSubject(messageData) {
 	for (const {name, value} of messageData.data.payload.headers) {
