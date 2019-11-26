@@ -18,9 +18,9 @@ module.exports.authorize = async function () {
 	let oAuth2Client = new google.auth.OAuth2(
 		client_id, client_secret, redirect_uris[0]);
 
-	oAuth2Client = await getNewToken(oAuth2Client);
-	//let token = await fs.readFile(TOKEN_PATH);
-	//oAuth2Client.setCredentials(JSON.parse(token.toString()));
+	//oAuth2Client = await getNewToken(oAuth2Client);
+	let token = await fs.readFile(TOKEN_PATH);
+	oAuth2Client.setCredentials(JSON.parse(token.toString()));
 	return oAuth2Client;
 };
 
@@ -32,14 +32,14 @@ module.exports.processMessages = async function (client) {
 };
 
 module.exports.countMessages = async function (client) {
-	const messages = await getMessages(client);
-	return messages.length;
+	//const messages = await getMessages(client);
+	return countMessages;
 };
 
 async function getMessages(client) {
 	logger.debug(`Start getting messages`);
 	const gmail = google.gmail({version: 'v1', client});
-	let messages = await gmail.users.messages.list({userId: 'me'});
+	let messages = await gmail.users.messages.list({userId: 'me', auth: client});
 	logger.debug(messages.data);
 	logger.debug(`End getting messages`);
 	return messages;
