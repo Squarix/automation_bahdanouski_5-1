@@ -15,7 +15,7 @@ function BasePage() {
 	this.selectorByText = (text) => {
 		logger.debug('DEBUG ----> LoginPage -> selectorByText')
 		logger.debug(`DEBUG ----> text: ${text}`)
-		return `android=new UiSelector().className("android.view.View").textContains("${text}")`
+		return `android=new UiSelector().className("android.widget.TextView").textContains("${text}")`
 	}
 }
 

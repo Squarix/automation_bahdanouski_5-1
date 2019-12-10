@@ -7,8 +7,8 @@ const passResourceId = 'user_password'
 function LoginPage() {
 	BasePage.apply(this, arguments)
 
-	this._errorSelector = this.selectorByText('error')
-	this._submit = this.selectorByText('submit')
+	this._errorResource = this.selectorByResource('error')
+	this._submitResource = this.selectorByResource('submit')
 
 	this.setPassword = async (pass) => {
 		logger.debug('DEBUG ----> LoginPage -> setPassword')
@@ -25,12 +25,12 @@ function LoginPage() {
 	}
 
 	this.clickSubmit = async () => {
-		await this.clickElement(this._submit)
+		await this.clickElement(this._submitResource)
 	}
 
 	this.getError = async () => {
 		logger.debug('DEBUG ----> LoginPage -> getting error message');
-		const errorElement = await $(this._errorSelector);
+		const errorElement = await $(this._errorResource);
 		const error = await errorElement.getText();
 
 		return error
