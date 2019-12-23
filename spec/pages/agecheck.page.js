@@ -1,5 +1,6 @@
 const {By} = require('selenium-webdriver')
 const BasePage = require('./base.page')
+const logger = require('../helpers/logger.helper')
 
 class AgeCheckPage extends BasePage {
 	constructor(driver) {
@@ -21,16 +22,19 @@ class AgeCheckPage extends BasePage {
 	}
 
 	async clickSelect() {
+		logger.info('Clicking select birth year')
 		const select = await this.getElement(this.ageSelector)
 		await this.click(select)
 	}
 
 	async clickYearOption() {
+		logger.info('Clicking year option')
 		const option = await this.getElement(this.ageOption)
 		await this.click(option)
 	}
 
 	async submitForm() {
+		logger.info('Clicking view page')
 		const submit = await this.getElement(this.openButtonSelector)
 		await this.click(submit)
 	}

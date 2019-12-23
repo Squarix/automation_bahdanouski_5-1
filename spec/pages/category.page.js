@@ -1,5 +1,6 @@
 const {By} = require('selenium-webdriver')
 const BasePage = require('./base.page')
+const logger = require('../helpers/logger.helper')
 
 class CategoryPage extends BasePage {
 	constructor(driver) {
@@ -12,25 +13,28 @@ class CategoryPage extends BasePage {
 	}
 
 	async getWithDiscountOrPrice() {
+		logger.info('getting item with max price or max discount')
 		const gamesAttributes = []
 		const games = await this.getElements(this.gamesSelector)
 		for (const game of games) {
 			const attributes = await this.populateGame(game)
 			gamesAttributes.push(attributes)
-			console.log(attributes)
 
 		}
 
 		const maxDiscount = this.getMaxDiscount(gamesAttributes)
 		if (maxDiscount) {
+			logger.debug('Max discount item ---->' + maxDiscount)
 			return maxDiscount
 		} else {
 			const maxPrice = this.getMaxPrice(gamesAttributes)
+			logger.debug('Max price item ---->' + maxPrice)
 			return maxPrice
 		}
 	}
 
 	async clickNewRelease() {
+		logger.info('clicking new release tab')
 		const newReleaseTab = await this.getElement(this.newReleaseSelector)
 		await this.click(newReleaseTab)
 	}

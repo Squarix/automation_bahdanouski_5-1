@@ -1,6 +1,8 @@
 const {By} = require('selenium-webdriver')
 const BasePage = require('./base.page')
 
+const logger = require('../helpers/logger.helper')
+
 class GamePage extends BasePage {
 	constructor(driver) {
 		super(driver)
@@ -10,8 +12,11 @@ class GamePage extends BasePage {
 	}
 
 	async getPriceAndDiscount() {
+		logger.info('Getting price and discount')
 		const price = await this.getPrice()
+		logger.debug('Got price: ' + price)
 		const discount = await this.getDiscount()
+		logger.debug('Got discount: ' + discount)
 		return {price, discount}
 	}
 

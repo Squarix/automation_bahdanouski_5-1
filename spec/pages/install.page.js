@@ -1,5 +1,6 @@
 const { By } = require('selenium-webdriver')
 const BasePage = require('./base.page')
+const logger = require('../helpers/logger.helper')
 // .//div[@id='about_greeting']//div[@class='about_install_wrapper']//a[@class='about_install_steam_link']
 
 const url = 'https://store.steampowered.com/about/'
@@ -15,6 +16,7 @@ class InstallPage extends BasePage {
 	}
 
 	async clickInstall() {
+		logger.info('clicking install')
 		const installButton = await this.getElement(this.installButtonSelector)
 		await this.click(installButton)
 	}

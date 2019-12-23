@@ -1,6 +1,7 @@
 const { Builder } = require('selenium-webdriver')
 
 const config = require('./config')
+const logger = require('./helpers/logger.helper')
 const WelcomePage = require('./pages/welcome.page')
 const CategoryPage = require('./pages/category.page')
 const GamePage = require('./pages/game.page')
@@ -19,8 +20,12 @@ const driver = new Builder()
 	.forBrowser(config.browser)
 	.build()
 
+
+
 describe('Testing steam store ', () => {
 	beforeAll(async () => {
+		await driver.manage().window().setRect({width: 1920, height: 1080, x: 0, y: 0})
+
 		this.gamePage = new GamePage(driver)
 		this.welcomePage = new WelcomePage(driver)
 		this.installPage = new InstallPage(driver)
@@ -65,7 +70,9 @@ describe('Testing steam store ', () => {
 			await this.installPage.timeout(100)
 		}
 
+		logger.info('Temp file disappeared')
 		let isDownloaded = await this.downloadHelper.isDownloaded('steam_latest')
+		logger.info('File downloaded: ' + isDownloaded)
 		expect(isDownloaded).toBe(true)
 	})
 
