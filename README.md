@@ -1,10 +1,9 @@
 # automation_bahdanouski_5-1
 
-#####Start test with
->npm run test
+Install modules with
+ >npm install
 
-#####Test data located at
->spec/testData.js
+Then set variables in config.js file
 
-#####Config located at
->spec/config.js
+After this you can run your test with 
+>npm run test || yarn test
