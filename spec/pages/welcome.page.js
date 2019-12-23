@@ -8,9 +8,14 @@ const url = 'https://store.steampowered.com'
 class WelcomePage extends BasePage {
 	constructor(driver) {
 		super(driver)
-		this.menuSelector = By.xpath('.//div[contains(@class, "tab  flyout_tab") and contains(., "Игры")]')
-		this.actionSelector = By.xpath('.//a[contains(text(), \'Экшен\')]')
+	}
 
+	getMenuItemSelector(item) {
+		return By.xpath(`.//a[contains(text(), '${item}')]`)
+	}
+
+	getMenuSelector(menu) {
+		return By.xpath(`.//div[contains(@class, "tab  flyout_tab") and contains(., "${menu}")]`)
 	}
 
 	async getPage() {
@@ -19,12 +24,12 @@ class WelcomePage extends BasePage {
 
 	async hoverMenu() {
 		logger.info('hover menu')
-		await this.hoverElement(this.menuSelector)
+		await this.hoverElement(this.getMenuSelector('Игры'))
 	}
 
 	async clickAction() {
 		logger.info('clicking action item')
-		const element = await this.getElement(this.actionSelector)
+		const element = await this.getElement(this.getMenuItemSelector('Экшен'))
 		this.click(element)
 	}
 }
