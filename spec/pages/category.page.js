@@ -40,9 +40,9 @@ class CategoryPage extends BasePage {
 		}
 	}
 
-	async clickNewRelease() {
+	async clickTab(tabName) {
 		logger.info('clicking new release tab')
-		const newReleaseTab = await this.getElement(this.getTabSelector('NewReleases'))
+		const newReleaseTab = await this.getElement(this.getTabSelector(tabName))
 		await this.click(newReleaseTab)
 	}
 

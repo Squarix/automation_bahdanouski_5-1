@@ -42,9 +42,9 @@ describe('Testing steam store ', () => {
 	it('validates price and discount', async () => {
 		await this.welcomePage.getPage()
 		await this.welcomePage.hoverMenu()
-		await this.welcomePage.clickAction()
+		await this.welcomePage.clickCategory('Экшен')
 
-		await this.categoryPage.clickNewRelease()
+		await this.categoryPage.clickTab('NewReleases')
 		const game = await this.categoryPage.getWithDiscountOrPrice()
 
 		await this.categoryPage.click(game.game)

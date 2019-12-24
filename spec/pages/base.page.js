@@ -3,8 +3,6 @@ const {until} = require('selenium-webdriver');
 module.exports = class BasePage {
 	constructor(driver) {
 		this.driver = driver
-
-		this.installSelector = './/a[@class=\'header_installsteam_btn_content\']'
 	}
 
 	timeout(ms) {
@@ -23,11 +21,6 @@ module.exports = class BasePage {
 
 	async click(element) {
 		await element.click()
-	}
-
-	async getText(element) {
-		const text = await element.getText()
-		return text
 	}
 
 	async hoverElement(selector) {

@@ -27,9 +27,9 @@ class WelcomePage extends BasePage {
 		await this.hoverElement(this.getMenuSelector('Игры'))
 	}
 
-	async clickAction() {
+	async clickCategory(category) {
 		logger.info('clicking action item')
-		const element = await this.getElement(this.getMenuItemSelector('Экшен'))
+		const element = await this.getElement(this.getMenuItemSelector(category))
 		this.click(element)
 	}
 }
